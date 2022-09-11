@@ -66,7 +66,7 @@ module.exports = {
         }
       );
       console.log("Likes +1");
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect(`/post/${req.params.id}`); 
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +76,9 @@ module.exports = {
       // Find post by id
       let post = await Post.findById({ _id: req.params.id });
       // Delete image from cloudinary
-      await cloudinary.uploader.destroy(post.cloudinaryId);
+      if (post.cloudinaryId) {
+        await cloudinary.uploader.destroy(post.cloudinaryId);
+      }
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");

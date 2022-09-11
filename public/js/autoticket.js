@@ -3,6 +3,13 @@ const formContainer = document.querySelector(".formContainer")
 
 const taskButtons = document.querySelectorAll(".btn-check")
 
+const addATask = document.querySelector('#addATask').addEventListener('click', animateForm)
+
+function animateForm() {
+    formContainer.classList.add('animate')
+    formContainer.style.visibility = 'visible'
+}
+
 taskButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         if (e.target.value == 'Incident') {
