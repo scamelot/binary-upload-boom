@@ -10,6 +10,7 @@ const logger = require("morgan");
 const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
+const moment = require('moment');
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -22,6 +23,10 @@ connectDB();
 
 //Using EJS for views
 app.set("view engine", "ejs");
+
+//use moment in EJS
+app.locals.moment = moment;
+app.locals.shortDateFormat = "MMMM Do YYYY"
 
 //Static Folder
 app.use(express.static("public"));

@@ -1,0 +1,18 @@
+  
+          <tr>
+            <th><a href="/post/<%= post._id%>"><%= moment(post.date).format(shortDateFormat) %></h3></a></th>
+            <th><a href="/post/<%= post._id%>"><%= post.title %></h3></a></th>
+            <td><h3><%= post.taskType %> </h3></td>
+            <td><h3><%= post.caption %> </h3></td>
+            <td><h3><img src='<%= post.image %>' style="max-width:25px;height:25px;"></h3></td>
+            <td><h3><%= post.minutes ? post.minutes + " minutes" : '' %></h3></td>
+            <td><%if(post.user == user.id){ %>
+                <form
+                  action="/post/deletePost/<%= post.id %>?_method=DELETE"
+                  method="POST"
+                  class="col-3"
+                >
+                  <button class="btn btn-primary fa fa-trash" type="submit"></button>
+                </form>
+                <%}%></td>
+          </tr>

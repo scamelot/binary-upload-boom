@@ -1,0 +1,56 @@
+body {
+    background: rgb(25, 25, 25);
+    color: white;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: lightblue;
+}
+
+.printable * {
+    background-color: white !important;
+    color: black !important;
+}
+
+.btn-group {
+    height: 8vh;
+    width: 100%;
+}
+
+.btn-group .btn {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    border: 0px solid !important;
+    border-radius: 5px !important;
+}
+
+.btn-task {
+    height: 5em;
+}
+
+#taskList {
+    border-radius: 5px;
+    color: white;
+}
+
+.formContainer {
+    position: relative;
+    z-index: 5;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.input-dark {
+    background-color: rgb(50,50,50);
+    color: white;
+}
+
+.input-dark:focus {
+    background-color: rgb(50,50,50);
+    color: white;
+}

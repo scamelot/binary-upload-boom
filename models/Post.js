@@ -1,3 +1,4 @@
+const moment = require("moment");
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
@@ -5,9 +6,12 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: Date,
+    default: moment()
+  },
   image: {
     type: String,
-    require: true,
   },
   cloudinaryId: {
     type: String,
@@ -15,7 +19,7 @@ const PostSchema = new mongoose.Schema({
   },
   caption: {
     type: String,
-    required: true,
+    default: ""
   },
   likes: {
     type: Number,
@@ -24,6 +28,12 @@ const PostSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  minutes: {
+    type: Number,
+  },
+  taskType: {
+    type: String,
   },
   createdAt: {
     type: Date,

@@ -1,0 +1,25 @@
+<table class="table" id="taskList">
+    <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">#</th>
+        <th scope="col">Task</th>
+        <th scope="col">Notes</th>
+        <th scope="col">Image</th>
+        <th scope="col">Time</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+    <ul>
+      <% for(var i=0; i<posts.length; i++) { %>
+        <%- include('post', {post: posts[i]}) %>
+      <% } %>
+    </ul>
+    </tbody>
+</table>
+<div class="row mt-5 flex justify-content-around">
+    <button class="btn btn-secondary w-25" onclick="exportToPDF('taskList')">Export to PDF</button>
+  </div>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="/js/exportToPDF.js"></script>

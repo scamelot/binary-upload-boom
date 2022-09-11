@@ -1,0 +1,59 @@
+<form action="/post/createPost" enctype="multipart/form-data" method="POST">
+  <div class="btn-group" role="group" aria-label="Task Type">
+    <div class="btn-group btn-task mw-100" role="group" aria-label="Basic radio toggle button group">
+
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio3" autocomplete="off" value="TC" checked />
+      <label class="btn btn-outline-secondary" for="btnradio3"><i class="fas fa-boxes"></i> Technical Coordination</label>
+
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio4" autocomplete="off" value="Imaging" />
+      <label class="btn btn-outline-light" for="btnradio4"><i class="fas fa-images"></i> Imaging</label>
+
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio2" autocomplete="off" value="Deploy" />
+      <label class="btn btn-outline-success" for="btnradio2"><i class="fas fa-shuttle-van"></i> Deploy</label>
+
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio1" autocomplete="off" value="Validation" />
+      <label class="btn btn-outline-primary" for="btnradio1"><i class="fas fa-clipboard-check"></i> <p>Validation</p></label>
+
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio6" autocomplete="off" value="Incident" />
+      <label class="btn btn-outline-danger" for="btnradio6"><i class="fas fa-laptop-medical"></i> Incident</label>
+          
+      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio5" autocomplete="off" value="Breakfix" />
+      <label class="btn btn-outline-warning" for="btnradio5"><i class="fas fa-tools"></i> Breakfix</label>
+    </div>
+  </div>
+<div class="container formContainer">
+<div class="mb-3">
+    <label for="title" class="form-label">Ticket #</label>
+    <input type="text" class="form-control input-dark" id="title" value="RITM" name="title" />
+</div>
+<div class="mb-3">
+  <label for="caption" class="form-label">Notes</label>
+  <textarea class="form-control input-dark" id="caption" name="caption"></textarea>
+</div>
+<div class="mb-3">
+  <label for="imgUpload" class="form-label">Image</label>
+  <input type="file" class="form-control input-dark" id="imageUpload" name="file" />
+</div>
+<div class="container d-flex justify-content-between align-items-end">
+  <div class="col-6 d-flex justify-content-start"> 
+  <button type="submit" class="btn btn-primary m-1" name="submit" value="Save Manually">Save Manually</button>
+  <button type="submit" class="btn btn-success m-1" name="submit" value="Upload">Start</button>
+  </div>
+  <div class="col-6">
+    <label for="minutes" class="form-label">Time</label>
+    <div class="row mt-2"><select class="form-select input-dark" name="minutes">
+      <option value="15">15 minutes</option>
+      <option value="30">30 minutes</option>
+      <option value="45">45 minutes</option>
+      <option value="60">60 minutes</option>
+      <option value="75">75 minutes</option>
+      <option value="90">90 minutes</option>
+      <option value="105">105 minutes</option>
+      <option value="120">120 minutes</option>
+    </select>
+    </div>
+  </div>
+</div>
+</div>
+</form>
+<script src="/js/autoticket.js"></script>
