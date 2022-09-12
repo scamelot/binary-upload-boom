@@ -13,8 +13,13 @@
         </form>
         <% if (post.allData) { %>
           <div>
-            <% for (data in post.allData) { %>
-              <h5><%= (data != 'submit' || data != 'btnradio') ? data + ":" : '' %> <%= post.allData[data] %> <% } %></h5>
+            <% for (data in post.allData) { 
+              const value = post.allData[data]
+              let 
+              switch(data) {
+
+              }
+              
           </div>
         <% } %>
         <%if(post.user == user.id){ %>
