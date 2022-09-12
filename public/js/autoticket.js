@@ -19,15 +19,19 @@ function makeVisible(selected) {
     'tc',
     'breakfix']
     const selectedElement = document.querySelector(`.${selected}Options`)
+    const selectedForm = document.querySelector(`#${selected}Options`)
     optionsList.forEach(opt => {
         console.log(`.${opt}Options`)
         const optElement = document.querySelector(`.${opt}Options`)
+        const optForm = document.querySelector(`#${opt}Options`)
         try{
             optElement.classList.remove('d-flex')
             optElement.disabled = true
             optElement.style.display = 'none'
             selectedElement.classList.add('d-flex')
             selectedElement.disabled = false
+            optForm.disabled = true
+            selectedForm.disabled = false
         }
         catch {
             console.log("doesn't exist yet")
