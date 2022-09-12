@@ -22,6 +22,6 @@ function exportToPDF(elem) {
           compress: true,
         },
       }
-    setTimeout(() => {html2pdf().set(opt).from(container).save();}, 1)
-    setTimeout(() => {container.classList.remove('printable');}, 2)
+    setTimeout(() => {html2pdf().set(opt).from(container).save();}, 1000)
+    setTimeout(() => {container.classList.remove('printable');}, 2000)
 }

@@ -13,6 +13,9 @@ const PostSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  allData: {
+    type: Object,
+  },
   cloudinaryId: {
     type: String,
     require: true,
@@ -28,6 +31,10 @@ const PostSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  state: {
+    type: String,
+    default: "Complete"
   },
   minutes: {
     type: Number,

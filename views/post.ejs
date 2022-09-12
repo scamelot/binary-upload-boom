@@ -10,9 +10,13 @@
           action="/post/likePost/<%= post.id %>?_method=PUT"
           method="POST"
         >
-          <button class="btn btn-primary fa fa-heart" type="submit"></button>
         </form>
-        <h3 class="col-3">Likes: <%= post.likes %></h3>
+        <% if (post.allData) { %>
+          <div>
+            <% for (data in post.allData) { %>
+              <h5><%= (data != 'submit' || data != 'btnradio') ? data + ":" : '' %> <%= post.allData[data] %> <% } %></h5>
+          </div>
+        <% } %>
         <%if(post.user == user.id){ %>
         <form
           action="/post/deletePost/<%= post.id %>?_method=DELETE"

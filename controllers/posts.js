@@ -5,8 +5,12 @@ const moment = require("moment");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const posts = await Post.find({ user: req.user.id });
-      res.render("profile.ejs", { posts: posts, user: req.user });
+      const posts = await Post.find({ user: req.user.id }).sort({createdAt: "desc"});
+      let totalTime = 0
+      posts.forEach(post => {
+        totalTime += post.minutes
+      })
+      res.render("profile.ejs", { posts: posts, user: req.user, totalTime: totalTime });
     } catch (err) {
       console.log(err);
     }
@@ -14,7 +18,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().sort({ createdAt: "desc" }).lean();
-      res.render("feed.ejs", { posts: posts });
+      res.render("feed.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
     }
@@ -39,6 +43,10 @@ module.exports = {
         imageId = result.public_id  
       }
 
+      if (req.body.os) {
+
+      }
+
       await Post.create({
         title: req.body.title,
         date: moment(),
@@ -46,9 +54,11 @@ module.exports = {
         minutes: req.body.minutes,
         taskType: req.body.btnradio,
         image: imageUrl,
+        allData: req.body,
         cloudinaryId: imageId,
         caption: req.body.caption,
         likes: 0,
+        state: req.body.state,
         user: req.user.id,
       });
       console.log("Post has been added!");
