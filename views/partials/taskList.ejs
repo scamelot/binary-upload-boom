@@ -14,8 +14,9 @@
     <tbody>
     <ul>
       <% for(var i=0; i<posts.length; i++) { %>
-        <%- include('post', {post: posts[i]}) %>
+          <%- include('post', {post: posts[i]}) %>
       <% } %>
     </ul>
     </tbody>
+    <h5 class="text-end">Total Tasks: <%= posts.length %></h5>
 </table>

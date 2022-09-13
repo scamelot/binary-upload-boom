@@ -1,9 +1,10 @@
 const ticketField = document.querySelector("#title")
 const formContainer = document.querySelector(".formContainer")
+const viewContainer = document.querySelector("#viewContainer")
 
 const taskButtons = document.querySelectorAll(".btn-check")
 
-const addATask = document.querySelector('#addATask').addEventListener('click', animateForm)
+// const addATask = document.querySelector('#addATask').addEventListener('click', animateForm)
 
 function animateForm() {
     formContainer.classList.add('animate')
@@ -12,26 +13,33 @@ function animateForm() {
 
 function makeVisible(selected) {
     console.log(selected)
+    
+    const selectedElement = document.querySelector(`.${selected}Options`)
+    const selectedForm = document.querySelector(`#${selected}Options`)
+    const selectedBtn = document.querySelector(`#${selected}Btn`)
+
     const optionsList = ['imaging',
     'validation',
     'deploy',
     'incident',
     'tc',
     'breakfix']
-    const selectedElement = document.querySelector(`.${selected}Options`)
-    const selectedForm = document.querySelector(`#${selected}Options`)
+
     optionsList.forEach(opt => {
-        console.log(`.${opt}Options`)
+        console.log(`${opt}Options`)
         const optElement = document.querySelector(`.${opt}Options`)
         const optForm = document.querySelector(`#${opt}Options`)
+        const optBtn = document.querySelector(`#${opt}Btn`)
         try{
             optElement.classList.remove('d-flex')
             optElement.disabled = true
+            optForm.disabled = true
             optElement.style.display = 'none'
+            optBtn.checked = false
             selectedElement.classList.add('d-flex')
             selectedElement.disabled = false
-            optForm.disabled = true
             selectedForm.disabled = false
+            selectedBtn.checked = true
         }
         catch {
             console.log("doesn't exist yet")
@@ -41,44 +49,39 @@ function makeVisible(selected) {
 
 }
 taskButtons.forEach(btn => {
-
-    if (btn.value == window.localStorage.getItem('taskType')) {
+    if (btn.value.toLowerCase() == window.localStorage.getItem('taskType')) {
+        console.log(btn)
         btn.click()
         makeVisible(window.localStorage.getItem('taskType').toLowerCase())
     }
+    if (viewContainer) {
+        var url = window.location.pathname
+        var getQuery = url.split('/')[2]
+        if (!getQuery) {
+            btn.checked = false
+        }
+    }
 
     btn.addEventListener('click', (e) => {
-        if (e.target.value == 'Incident') {
-            ticketField.value = "INC"
-        }
-        else {
-            ticketField.value = "RITM"
-        }
-        window.localStorage.setItem('taskType', e.target.value)
-        let newBgColor = () => {
-            switch (e.target.value) {
-                case 'Incident':
-                    formContainer.style.color = "white"
-                    return "#dc3545"
-                case 'Validation':
-                    formContainer.style.color = "white"
-                    return "#0d6efd"
-                case 'Deploy':
-                    formContainer.style.color = "white"
-                    return "#198754"
-                case 'Imaging':
-                    imagingOptions.style.visibility = 'visible'
-                    formContainer.style.color = "black"
-                    return "#f8f9fa"
-                case 'TC':
-                    formContainer.style.color = "white"
-                    return "#6c757d"
-                case 'Breakfix':
-                    formContainer.style.color = "black"
-                    return "#ffc107"
+        const taskType = e.target.value.toLowerCase()
+
+        if (ticketField) {
+            if (e.target.value == 'Incident') {
+                ticketField.value = "INC"
+            }
+            else {
+                ticketField.value = "RITM"
             }
         }
-        makeVisible(e.target.value.toLowerCase())
+
+        window.localStorage.setItem('taskType', taskType)
+
+        makeVisible(taskType)
+
+        if (viewContainer) {
+            console.log('Button clicked in view!')
+            window.location.replace(`/feed/${taskType}`)
+        }
         // formContainer.style.backgroundColor = newBgColor()
     })
 })

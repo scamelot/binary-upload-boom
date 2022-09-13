@@ -1,28 +1,73 @@
 <%- include('partials/header', {user: user}) -%>
 <div class="container">
-  <div class="row justify-content-center mt-5">
+  <div class="row">
     <div class="col-6">
-      <h2><%= post.title %></h2>
+      <a href="/profile" class="mb-2"><i class="fa fa-arrow-left"></i> Go Back</a>
+      <h2 class="mt-5"><%= post.title %></h2>
       <img class="img-fluid" src="<%= post.image%>" />
-      <div class="row justify-content-between">
-        <form
-          class="col-1"
-          action="/post/likePost/<%= post.id %>?_method=PUT"
-          method="POST"
-        >
-        </form>
-        <% if (post.allData) { %>
+      <div class="row">
+        <div class="col">
+        <% 
+        if (post.allData) { 
+          let vals = {
+                login: false,
+                apps: false, 
+                onedrive: false,
+                vpn: false
+              }
+              let issues = {
+                account: false,
+                no_contact: false,
+                vpn: false,
+                shipping: false,
+                dep: false,
+                rescheduled: false
+              }
+        %>
           <div>
             <% for (data in post.allData) { 
               const value = post.allData[data]
-              let 
-              switch(data) {
-
+              switch (data) {
+                case 'btnradio':
+                %><h5 class="w-100 rounded text-center <%=value.toLowerCase()%>"><%=value%></h5> 
+                <% break
+                case 'minutes':
+                %><p class="text-end"><%=value %> minutes</p>
+                <% break
+                case 'state':
+                %><h2 class=""><%=value.charAt(0).toUpperCase() + value.slice(1) %></h2>
+                <% break
+                case 'location':
+                %><span><%=value %></span>
+                <% break
+                case 'os':
+                %><h6><%=value %></h6>
+                <% break
+                case 'title':
+                  break
+                case 'caption':
+                  if (value) {%>
+                  <label for='notes'>Notes:</label>
+                  <p id="notes"><%=value %></p>
+                <% }
+                case 'submit':
+                  break
+                default:
+                %><span><%=value %></span>
+                <% break
               }
-              
+            }%>
+            </div>
           </div>
         <% } %>
-        <%if(post.user == user.id){ %>
+
+
+        
+      </div>
+    </div>
+    </div>
+    <div class="row mt-5">
+      <%if(post.user == user.id){ %> 
         <form
           action="/post/deletePost/<%= post.id %>?_method=DELETE"
           method="POST"
@@ -31,16 +76,8 @@
           <button class="btn btn-primary fa fa-trash" type="submit"></button>
         </form>
         <%}%>
-      </div>
-    </div>
-    <div class="col-3 mt-5">
-      <p><%= post.caption %></p>
-    </div>
-    <div class="col-6 mt-5">
-      <a class="btn btn-primary" href="/profile">Return</a>
       <!-- <a class="btn btn-primary" href="/feed">Return to Feed</a> -->
     </div>
   </div>
-</div>
 
 <%- include('partials/footer') -%>

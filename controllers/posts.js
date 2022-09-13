@@ -17,7 +17,11 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      const posts = await Post.find().sort({ createdAt: "desc" }).lean();
+      let posts = await Post.find().sort({ createdAt: "desc" }).lean();
+      if (req.params.task) {
+        const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
+        posts = await Post.find({taskType: taskType}).sort({ createdAt: "desc" }).lean();
+      }
       res.render("feed.ejs", { posts: posts, user: req.user });
     } catch (err) {
       console.log(err);
@@ -50,7 +54,6 @@ module.exports = {
       await Post.create({
         title: req.body.title,
         date: moment(),
-        taskType: req.body.taskType,
         minutes: req.body.minutes,
         taskType: req.body.btnradio,
         image: imageUrl,
@@ -61,6 +64,7 @@ module.exports = {
         state: req.body.state,
         user: req.user.id,
       });
+
       console.log("Post has been added!");
       res.redirect("/profile");
     } catch (err) {

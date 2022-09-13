@@ -16,6 +16,14 @@ a:hover {
     color: black !important;
 }
 
+.complete {
+    color: #0ee07e;
+}
+
+.Progress {
+    color: #ffc107;
+}
+
 .taskLabel {
     border-radius: 5px;
     padding: .2em;

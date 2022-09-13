@@ -1,33 +1,17 @@
 <div class="container">
 <form action="/post/createPost" enctype="multipart/form-data" method="POST">
 
-  <div class="btn-group" role="group" aria-label="Task Type">
-    <div class="btn-group btn-task mw-100" role="group" aria-label="Basic radio toggle button group">
-
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio3" autocomplete="off" value="TC" checked />
-      <label class="btn btn-outline-secondary" for="btnradio3"><i class="fas fa-boxes"></i> Technical Coordination</label>
-
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio4" autocomplete="off" value="Imaging" />
-      <label class="btn btn-outline-light" for="btnradio4"><i class="fas fa-images"></i> Imaging</label>
-
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio2" autocomplete="off" value="Deploy" />
-      <label class="btn btn-outline-success" for="btnradio2"><i class="fas fa-shuttle-van"></i> Deploy</label>
-
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio1" autocomplete="off" value="Validation" />
-      <label class="btn btn-outline-primary" for="btnradio1"><i class="fas fa-clipboard-check"></i> <p>Validation</p></label>
-
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio6" autocomplete="off" value="Incident" />
-      <label class="btn btn-outline-danger" for="btnradio6"><i class="fas fa-laptop-medical"></i> Incident</label>
-          
-      <input type="radio" class="btn-check btn-task" name="btnradio" id="btnradio5" autocomplete="off" value="Breakfix" />
-      <label class="btn btn-outline-warning" for="btnradio5"><i class="fas fa-tools"></i> Breakfix</label>
-    </div>
-  </div>
 
 <div class="formContainer">
+<%- include('taskButtons') %>
+
 <%- include('options/imaging') %>
 <%- include('options/validation') %>
 <%- include('options/deploy') %>
+<%- include('options/tc') %>
+<%- include('options/incident') %>
+<%- include('options/breakfix') %>
+
 <div class="col d-flex justify-content-between">
 
   <div>    
@@ -46,7 +30,7 @@
   <div>
     <label for="state" class="form-label">State</label>
     <select class="form-select input-dark" name="state">
-    <option value="wip">In Progress</option>
+    <option value="In Progress">In Progress</option>
     <option value="complete" selected>Complete</option>
   </select>
 </div>
@@ -72,4 +56,3 @@
   
 </div>
 </form>
-<script src="/js/autoticket.js"></script>

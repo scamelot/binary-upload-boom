@@ -1,12 +1,10 @@
 <%- include('partials/header', {user: user}) -%>
-  <div class="container">
+  <div class="container" id="viewContainer">
     <div class="row justify-content-center mt-5">
+      <%- include ('partials/taskbuttons.ejs') -%>
       <%- include('partials/taskList', {user: user, posts: posts}) %>
         </ul>
     <button class="btn btn-secondary w-25" onclick="exportToPDF('taskList')">Export to PDF</button>
     </div>
   </div>  
 <%- include('partials/footer') %>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="/js/exportToPDF.js"></script>

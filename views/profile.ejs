@@ -1,8 +1,13 @@
 <%- include('partials/header', {user: user}) -%>
 <div class="container">
   <div class="col mt-5">
-      <div class="w-75 mx-auto">
-            <h2 class="text-center mb-5" id="addATask" onClick="animateForm">Add a Task</h2>
+      <div class="w-75 mx-auto row d-flex justify-content-center">
+        <div class="col-6">
+            <h2 class="text-center d-inline mb-5" id="addATask" onClick="">Add a Task</h2>
+        </div>
+        <div class="col-6">
+            <a href="/feed"><h2 class="text-end d-inline-block" id="viewReports mb-5" onClick="">View Reports</h2></a>
+        </div>
             <%- include('partials/postForm') %>
           
       </div>
