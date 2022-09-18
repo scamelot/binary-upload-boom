@@ -1,0 +1,20 @@
+<form id="feedFilters" action="/feed?_method=GET" action="POST">
+    <div class="row">
+        <div class="col-3">
+            <label for="timespan">Timespan:</label>
+            <select name="timespan" class="form-control text-light bg-dark mb-5" onchange="this.form.submit()">
+                <option value="7">This Week</option>
+                <option value="0">All Time</option>
+                <option value="30">This Month</option>
+                <option value="90">Last 90 Days</option>
+            </select>
+        </div>
+        <div class="col-3">
+            <label for="tech">Tech:</label>
+            <select name="tech" class="form-control text-light bg-dark mb-5" onchange="this.form.submit()">
+                <option value="0" selected>All Techs</option>
+            </select>
+        </div>
+
+    </div>
+</form>

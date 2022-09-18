@@ -5,7 +5,7 @@ const moment = require("moment");
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      const posts = await Post.find({ user: req.user.id }).sort({createdAt: "desc"});
+      const posts = await Post.find({ user: req.user.id }).sort({createdAt: "desc"}).lean();
       let totalTime = 0
       posts.forEach(post => {
         totalTime += post.minutes
@@ -17,7 +17,12 @@ module.exports = {
   },
   getFeed: async (req, res) => {
     try {
-      let posts = await Post.find().sort({ createdAt: "desc" }).lean();
+      let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
+
+      if (req.params.timespan) {
+        console.log(req.params.timespan)
+        posts = await Post.find({createdAt: {$gt: new Date().getDate() - req.params.timespan }}).sort({ createdAt: "desc" }).lean();
+      }
       if (req.params.task) {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
         posts = await Post.find({taskType: taskType}).sort({ createdAt: "desc" }).lean();
