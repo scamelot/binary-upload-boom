@@ -1,0 +1,13 @@
+{
+    "name": "Gettin started example",
+    "description": "i build a example for getting started",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["storage", "activeTab", "scripting"],
+    "action": {
+      "default_popup": "popup.html"
+    }
+  }

@@ -15,17 +15,31 @@ module.exports = {
       console.log(err);
     }
   },
+  // changeView: async (req,res) => {
+  //   console.log('Changing views!')
+  //   try {
+  //     console.log(req.body)
+  //     const daysBack = new Date().getDate() - 7
+  //     const posts = await Post.find({ createdAt: { $gte: daysBack } }).sort({createdAt: "desc"}).lean()
+  //     res.render("feed.ejs", {posts: posts, user: req.user})
+  //   }
+  //   catch (err) {
+  //     console.error(err)
+  //   }
+  // },
   getFeed: async (req, res) => {
     try {
       let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
-
-      if (req.params.timespan) {
-        console.log(req.params.timespan)
-        posts = await Post.find({createdAt: {$gt: new Date().getDate() - req.params.timespan }}).sort({ createdAt: "desc" }).lean();
-      }
       if (req.params.task) {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
-        posts = await Post.find({taskType: taskType}).sort({ createdAt: "desc" }).lean();
+        posts = posts.filter(post => post.taskType == taskType)
+      }
+      if (req.query.timespan) {
+        console.log('days back: ' + req.query.timespan)
+        const daysBack = moment().subtract(req.query.timespan,'d')
+        console.log(daysBack, moment(posts[0].createdAt).subtract(7,'d'))
+        posts = posts.filter(post => moment(post.createdAt).isSameOrAfter(daysBack))
+        console.log(posts.length)
       }
       res.render("feed.ejs", { posts: posts, user: req.user });
     } catch (err) {
@@ -50,10 +64,6 @@ module.exports = {
         const result = await cloudinary.uploader.upload(req.file.path);
         imageUrl = result.secure_url
         imageId = result.public_id  
-      }
-
-      if (req.body.os) {
-
       }
 
       await Post.create({
