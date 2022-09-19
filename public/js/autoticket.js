@@ -2,15 +2,19 @@ const ticketField = document.querySelector("#title")
 const formContainer = document.querySelector(".formContainer")
 const viewContainer = document.querySelector("#viewContainer")
 
-const taskButtons = document.querySelectorAll(".btn-check")
+//feed selects
+const timespanSelect = document.querySelector("#timespanSelect")
+const techSelect = document.querySelector("#techSelect")
 
-// const addATask = document.querySelector('#addATask').addEventListener('click', animateForm)
+const taskButtons = document.querySelectorAll(".btn-check")
 
 function animateForm() {
     formContainer.classList.add('animate')
     formContainer.style.visibility = 'visible'
 }
 
+
+//handle visibility of task input elements based on category selected
 function makeVisible(selected) {
     console.log(selected)
     
@@ -48,6 +52,9 @@ function makeVisible(selected) {
 
 
 }
+
+//task category button handling
+
 taskButtons.forEach(btn => {
     if (btn.value.toLowerCase() == window.localStorage.getItem('taskType')) {
         console.log(btn)

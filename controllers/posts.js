@@ -1,6 +1,50 @@
 const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 const moment = require("moment");
+const User = require('../models/User')
+
+function addOSIcon(post) {
+  if (post.allData.os == 'Windows') return "<i class='fa-brands fa-windows'></i>"
+  if (post.allData.os == 'Mac') return "<i class='fa-brands fa-apple'></i>"
+}
+
+function updateView(post) {
+  if (post.taskType == 'Validation') {
+    if (post.allData) {
+      post.caption += addOSIcon(post)
+      let failures = Object.keys(post.allData).filter(key => key.includes("Fail"))
+      if (failures.length > 0) {
+        failures = failures.map(x => x.replace('Fail','')  )
+        post.caption += `\n<b class='text-danger'>Failed:</b> `
+        failures.forEach(fail => {
+          post.caption += `${fail} `
+        })
+      }
+      else {
+        let verified = Object.keys(post.allData).filter(key => key.includes('val'))
+        verified = verified.map(x => x.replace('val', ''))
+        post.caption += `\n<b class='text-success'>Verified:</b> `
+        verified.forEach(val => {
+          post.caption +=`${val} `
+        })
+      }
+    }
+  }
+  else if (post.taskType == 'Imaging') {
+    if (post.allData) {
+      post.caption += addOSIcon(post)
+      post.caption += " " + post.allData.imagingType
+    }
+  }
+  else if (post.taskType == 'Deploy') {
+    if (post.allData) {
+      post.caption += "\n" + post.allData.location + " " + addOSIcon(post)
+    }
+  }
+  return post
+}
+
+
 
 module.exports = {
   getProfile: async (req, res) => {
@@ -9,27 +53,17 @@ module.exports = {
       let totalTime = 0
       posts.forEach(post => {
         totalTime += post.minutes
+        updateView(post)
       })
       res.render("profile.ejs", { posts: posts, user: req.user, totalTime: totalTime });
     } catch (err) {
       console.log(err);
     }
   },
-  // changeView: async (req,res) => {
-  //   console.log('Changing views!')
-  //   try {
-  //     console.log(req.body)
-  //     const daysBack = new Date().getDate() - 7
-  //     const posts = await Post.find({ createdAt: { $gte: daysBack } }).sort({createdAt: "desc"}).lean()
-  //     res.render("feed.ejs", {posts: posts, user: req.user})
-  //   }
-  //   catch (err) {
-  //     console.error(err)
-  //   }
-  // },
   getFeed: async (req, res) => {
     try {
       let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
+      let users = await User.find({}).lean();
       if (req.params.task) {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
         posts = posts.filter(post => post.taskType == taskType)
@@ -37,17 +71,26 @@ module.exports = {
       if (req.query.timespan) {
         console.log('days back: ' + req.query.timespan)
         const daysBack = moment().subtract(req.query.timespan,'d')
-        console.log(daysBack, moment(posts[0].createdAt).subtract(7,'d'))
+        if (req.query.timespan == 0) { // All Time
+          daysBack = moment('1987-10-28')
+        }
         posts = posts.filter(post => moment(post.createdAt).isSameOrAfter(daysBack))
         console.log(posts.length)
       }
-      res.render("feed.ejs", { posts: posts, user: req.user });
+      posts.forEach(post => { 
+        updateView(post) 
+      })
+      if (req.query.tech) {
+        posts = posts.filter(post => post.user == req.query.tech )
+      }
+      res.render("feed.ejs", { posts: posts, user: req.user, users: users });
     } catch (err) {
       console.log(err);
     }
   },
   getPost: async (req, res) => {
     try {
+      //TODO - Beautify the single post page...do we do that in the view???
       const post = await Post.findById(req.params.id);
       res.render("post.ejs", { post: post, user: req.user });
     } catch (err) {

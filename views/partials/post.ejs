@@ -5,7 +5,7 @@
     <td><h3 class="taskLabel <%= post.taskType ? post.taskType.toLowerCase() : '' %>"><%= post.taskType %> </h3></td>
     <td><h5 class="<%= post.state %>"> <%= post.state ? post.state.charAt(0).toUpperCase() + post.state.slice(1) : ''%> </h5></td>
 
-    <td><p><%= post.caption %> </p></td>
+    <td><%- post.caption %></td>
     <td><p><%= post.data %></p></td>
     <td><h5><%= post.minutes ? post.minutes + " minutes" : '' %></h5></td>
     <td><% if(post.user == user.id){ %>
