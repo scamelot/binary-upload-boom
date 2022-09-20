@@ -14,12 +14,12 @@
             <select name="tech" class="form-control text-light bg-dark mb-5" id="techSelect">
                 <option value="0">All Techs</option>
                 <% users.forEach(user => { %>
-                    <option value="<%=user._id%>"><%=user.userName%></option>
+                    <option value="<%= user._id %>"><%= user.userName %></option>
               <%  }) %>
             </select>
         </div>
         <div class="col-3 d-flex flex-row">
-            <input type="submit" class="btn btn-primary mb-5 align-self-end" value="Submit">
+            <input type="submit" class="btn btn-primary mb-5 align-self-end" value="Reload">
         </div>
     </div>
 </form>

@@ -64,13 +64,13 @@ module.exports = {
     try {
       let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
       let users = await User.find({}).lean();
-      if (req.params.task) {
+      if (req.query.task) {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
         posts = posts.filter(post => post.taskType == taskType)
       }
       if (req.query.timespan) {
         console.log('days back: ' + req.query.timespan)
-        const daysBack = moment().subtract(req.query.timespan,'d')
+        let daysBack = moment().subtract(req.query.timespan,'d')
         if (req.query.timespan == 0) { // All Time
           daysBack = moment('1987-10-28')
         }
@@ -81,7 +81,7 @@ module.exports = {
         updateView(post) 
       })
       if (req.query.tech) {
-        posts = posts.filter(post => post.user == req.query.tech )
+        if (req.query.tech != 0) posts = posts.filter(post => post.user == req.query.tech )
       }
       res.render("feed.ejs", { posts: posts, user: req.user, users: users });
     } catch (err) {
