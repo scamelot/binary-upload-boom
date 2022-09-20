@@ -1,6 +1,7 @@
 const ticketField = document.querySelector("#title")
 const formContainer = document.querySelector(".formContainer")
 const viewContainer = document.querySelector("#viewContainer")
+const taskLabels = document.querySelectorAll('.taskLabel')
 
 //feed selects
 const timespanSelect = document.querySelector("#timespanSelect")
@@ -30,7 +31,6 @@ function makeVisible(selected) {
     'breakfix']
 
     optionsList.forEach(opt => {
-        console.log(`${opt}Options`)
         const optElement = document.querySelector(`.${opt}Options`)
         const optForm = document.querySelector(`#${opt}Options`)
         const optBtn = document.querySelector(`#${opt}Btn`)
@@ -61,13 +61,13 @@ taskButtons.forEach(btn => {
         btn.click()
         makeVisible(window.localStorage.getItem('taskType').toLowerCase())
     }
-    if (viewContainer) {
-        var url = window.location.pathname
-        var getQuery = url.split('/')[2]
-        if (!getQuery) {
-            btn.checked = false
-        }
-    }
+    // if (viewContainer) {
+    //     var url = window.location.pathname
+    //     var getQuery = url.split('/')[2]
+    //     if (!getQuery) {
+    //         btn.checked = false
+    //     }
+    // }
 
     btn.addEventListener('click', (e) => {
         const taskType = e.target.value.toLowerCase()
@@ -86,8 +86,16 @@ taskButtons.forEach(btn => {
         makeVisible(taskType)
 
         if (viewContainer) {
-            console.log('Button clicked in view!')
-            window.location.replace(`/feed/${taskType}`)
+             console.log('Button clicked in view!')
+             taskLabels.forEach(post => {
+                console.log(taskType, post.innerText.toLowerCase())
+                if (post.innerHTML.toLowerCase().trim() != taskType) {
+                    post.parentNode.parentNode.style.display = 'none'
+                }
+                else {
+                    post.parentNode.parentNode.style.display = ''
+                }
+             })
         }
         // formContainer.style.backgroundColor = newBgColor()
     })

@@ -1,7 +1,7 @@
   
-<tr>
-    <th><a href="/post/<%= post._id%>"><%= moment(post.date).format(shortDateFormat) %></h3></a></th>
-    <th><a href="/post/<%= post._id%>"><%= post.title %></h3></a></th>
+<tr class="post">
+    <td><a href="/post/<%= post._id%>"><%= moment(post.date).format(shortDateFormat) %></h3></a></td>
+    <td><a href="/post/<%= post._id%>"><%= post.title %></h3></a></td>
     <td><h3 class="taskLabel <%= post.taskType ? post.taskType.toLowerCase() : '' %>"><%= post.taskType %> </h3></td>
     <td><h5 class="<%= post.state %>"> <%= post.state ? post.state.charAt(0).toUpperCase() + post.state.slice(1) : ''%> </h5></td>
 

@@ -38,7 +38,7 @@ function updateView(post) {
   }
   else if (post.taskType == 'Deploy') {
     if (post.allData) {
-      post.caption += "\n" + post.allData.location + " " + addOSIcon(post)
+      post.caption += "\n" + post.allData.location + " " + post.allData.action
     }
   }
   return post
