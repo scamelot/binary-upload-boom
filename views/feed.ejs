@@ -2,8 +2,34 @@
   <div class="container" id="viewContainer">
       <%- include('partials/tabs') -%>
        <%- include('partials/feedFilters') -%>
+       <div class="row">
+            <div class="col-6 d-flex flex-column align-items-center">
+              <h2>Validations</h2>
+          <% for (type in validations) { %>
+              <p><%= type %>: <%= validations[type] %></p>
+            <% } %>
+            <p>Success Rate: <%= ((validations.successful / validations.total) * 100).toFixed(2)%> %</p>
+        </div>
+        <div class="col-6 d-flex flex-column align-items-center">
+          <div class="col">
+          <h2>Imaging</h2>
+        </div>
+      <div class="col">
+       <p><i class='fa-brands fa-apple'></i> Mac: <%= images.mac %></p>
+       <p><i class='fa-brands fa-windows'></i> Windows: <%=images.windows %></p>
+      </div>
+      <div class="col">
+       <p><i class="fa-solid fa-building"></i> Onsite: <%=images.onsite %></p>
+       <p><i class="fa-solid fa-wifi"></i> Remote: <%=images.remote %></p>
+      </div>
+      </div>
       <%- include('partials/taskList', {user: user, posts: posts}) %>
+
+        </div>
+       </div>
+       
         </ul>
+
     <button class="btn btn-secondary w-25" onclick="exportToPDF('taskList')">Export to PDF</button>
     </div>
   </div>  

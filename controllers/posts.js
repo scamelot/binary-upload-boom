@@ -4,8 +4,8 @@ const moment = require("moment");
 const User = require('../models/User')
 
 function addOSIcon(post) {
-  if (post.allData.os == 'Windows') return "<i class='fa-brands fa-windows'></i>"
-  if (post.allData.os == 'Mac') return "<i class='fa-brands fa-apple'></i>"
+  if (post.allData.imagingOS == 'Windows' || post.allData.os == 'Windows') return "<i class='fa-brands fa-windows'></i>"
+  if (post.allData.imagingOS == 'Mac' || post.allData.os == 'Mac') return "<i class='fa-brands fa-apple'></i>"
 }
 
 function updateView(post) {
@@ -18,6 +18,7 @@ function updateView(post) {
         post.caption += `\n<b class='text-danger'>Failed:</b> `
         failures.forEach(fail => {
           post.caption += `${fail} `
+          post[`${fail}`] = true
         })
       }
       else {
@@ -26,6 +27,7 @@ function updateView(post) {
         post.caption += `\n<b class='text-success'>Verified:</b> `
         verified.forEach(val => {
           post.caption +=`${val} `
+          post.success = true
         })
       }
     }
@@ -33,11 +35,12 @@ function updateView(post) {
   else if (post.taskType == 'Imaging') {
     if (post.allData) {
       post.caption += addOSIcon(post)
-      post.caption += " " + post.allData.imagingType
+      post.caption += " " + post.allData.imagingLocation + " " + post.allData.imagingType
     }
   }
   else if (post.taskType == 'Deploy') {
     if (post.allData) {
+      console.log(post.allData.location)
       post.caption += "\n" + post.allData.location + " " + post.allData.action
     }
   }
@@ -47,6 +50,7 @@ function updateView(post) {
 
 
 module.exports = {
+
   getProfile: async (req, res) => {
     try {
       const posts = await Post.find({ user: req.user.id }).sort({createdAt: "desc"}).lean();
@@ -65,10 +69,12 @@ module.exports = {
     try {
       let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
       let users = await User.find({}).lean();
+
       if (req.query.task) {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
         posts = posts.filter(post => post.taskType == taskType)
       }
+
       if (req.query.timespan) {
         console.log('days back: ' + req.query.timespan)
         let daysBack = moment().subtract(req.query.timespan,'d')
@@ -79,18 +85,50 @@ module.exports = {
         console.log(posts.length)
       }
 
-      //stats logic
-      posts.forEach(post => { 
-        updateView(post)
-        // validations - number of win/mac/succcess/fail
-        // imaging - number of win/mac/onsite/remote
-        // deploy - number of deploys/recoveries - building heatmap?
-        
-      })
       if (req.query.tech) {
         if (req.query.tech != 0) posts = posts.filter(post => post.user == req.query.tech )
       }
-      res.render("feed.ejs", { posts: posts, user: req.user, users: users });
+
+      //stats logic
+      let validationSummary = {total: 0, successful: 0}
+      let imagingSummary = {mac: 0, windows: 0, onsite: 0, remote: 0}
+      let deploySummary = {}
+      posts.forEach(post => { 
+        updateView(post)
+        let failures = Object.keys(post.allData).filter(key => key.includes("Fail"))
+        for (fail of failures) {
+          console.log(fail)
+          if (!validationSummary[`${fail}`]) validationSummary[`${fail}`] = 1
+          else {validationSummary[`${fail}`] += 1}
+          validationSummary.total++
+        }
+
+        if (post.success) {
+          validationSummary.successful += 1
+          validationSummary.total++
+        }
+              // validations - number of win/mac/failures by type/success
+        if (post.allData.imagingLocation == 'Onsite') {
+          imagingSummary.onsite += 1
+        }
+        else if (post.allData.imagingLocation == 'Remote') {
+          imagingSummary.remote += 1
+        }
+              // imaging - number of win/mac/onsite/remote
+        if (post.allData.imagingOS == 'Windows') {
+          imagingSummary.windows += 1
+        }
+        else if (post.allData.imagingOS == 'Mac') {
+          imagingSummary.mac += 1
+        }
+
+
+
+              // deploy - number of deploys/recoveries - building heatmap?
+         
+      })
+      console.log(validationSummary)
+      res.render("feed.ejs", { posts: posts, user: req.user, users: users, validations: validationSummary, images: imagingSummary });
     } catch (err) {
       console.log(err);
     }
@@ -123,6 +161,7 @@ module.exports = {
         taskType: req.body.btnradio,
         image: imageUrl,
         allData: req.body,
+        location: req.body.location,
         cloudinaryId: imageId,
         caption: req.body.caption,
         likes: 0,

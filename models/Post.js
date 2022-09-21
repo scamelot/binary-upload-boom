@@ -20,6 +20,9 @@ const PostSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  location: {
+    type: String,
+  },
   caption: {
     type: String,
     default: ""
