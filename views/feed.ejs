@@ -3,6 +3,10 @@
       <%- include('partials/tabs') -%>
        <%- include('partials/feedFilters') -%>
        <!-- TODO: Include summaries in report, add dates to report -->
+    <div id="report">
+       <div class="row">
+        <h3 class="text-center mb-5">Technician Report for <%=tech == 0 ? 'All Techs' : tech%><br> <%=startDate %> to <%=endDate %></h3>
+       </div>
        <div class="row">
             <div class="col-6 d-flex flex-column align-items-center">
               <h2>Validations</h2>
@@ -25,13 +29,13 @@
       </div>
       </div>
       <%- include('partials/taskList', {user: user, posts: posts}) %>
-
+    </ul>
         </div>
        </div>
        
-        </ul>
 
-    <button class="btn btn-secondary w-25" onclick="exportToPDF('taskList')">Export to PDF</button>
+
+    <button class="btn btn-secondary w-25" onclick="exportToPDF('report')">Export to PDF</button>
     </div>
   </div>  
 <%- include('partials/footer') %>

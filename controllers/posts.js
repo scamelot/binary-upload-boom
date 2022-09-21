@@ -74,10 +74,11 @@ module.exports = {
         const taskType = req.params.task.charAt(0).toUpperCase() + req.params.task.slice(1)
         posts = posts.filter(post => post.taskType == taskType)
       }
-
+      
+      let daysBack = moment().subtract(7,'d')
       if (req.query.timespan) {
         console.log('days back: ' + req.query.timespan)
-        let daysBack = moment().subtract(req.query.timespan,'d')
+        daysBack = moment().subtract(req.query.timespan,'d')
         if (req.query.timespan == 0) { // All Time
           daysBack = moment('1987-10-28')
         }
@@ -121,14 +122,16 @@ module.exports = {
         else if (post.allData.imagingOS == 'Mac') {
           imagingSummary.mac += 1
         }
-
-
-
               // deploy - number of deploys/recoveries - building heatmap?
          
       })
-      console.log(validationSummary)
-      res.render("feed.ejs", { posts: posts, user: req.user, users: users, validations: validationSummary, images: imagingSummary });
+      //get tech userName
+      let techName = ''
+      if (req.query.tech) {
+        const techData = await User.findById(req.query.tech).lean()
+        techName = techData.userName || 'All Techs'
+      }
+      res.render("feed.ejs", { posts: posts, tech: techName, user: req.user, users: users, validations: validationSummary, images: imagingSummary, startDate: daysBack.format('MMMM DD yy'), endDate: moment().format('MMMM DD yy') });
     } catch (err) {
       console.log(err);
     }
