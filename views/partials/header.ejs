@@ -22,7 +22,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+
+
     <header class="container">
     <% if (user) { %>
       <div class="d-flex justify-content-around mt-2">
@@ -30,10 +31,12 @@
         <p><strong>Email</strong>: <%= user.email %></p>
     </div>
     <div class='d-flex justify-content-end'>
-      <a href="/logout" class="btn btn-primary justify-content-center">Logout</a>
+      <a href="/logout" class="btn btn-outline-secondary mb-5">Logout</a>
     </div>
+    <% } else { %>
+      <div class="spacer mt-5"></div>
     <% } %>
       <div class="text-center">
-        <h1 class=""><a href="/profile"><img class="img-fluid" style="width:200px; height: 200px; margin-top: -2em" src='/imgs/taskerlogo.gif'></img></a></h1>
+        <h1 class=""><a href="/profile"><img class="img-fluid" id="logo" style="width:200px; height: 200px; margin-top: -2em" src='/imgs/taskerlogo.gif'></img></a></h1>
       </div>
     </header>

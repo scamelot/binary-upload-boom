@@ -60,6 +60,7 @@ module.exports = {
       console.log(err);
     }
   },
+
   getFeed: async (req, res) => {
     try {
       let posts = await Post.find({}).sort({ createdAt: "desc" }).lean();
@@ -77,8 +78,14 @@ module.exports = {
         posts = posts.filter(post => moment(post.createdAt).isSameOrAfter(daysBack))
         console.log(posts.length)
       }
+
+      //stats logic
       posts.forEach(post => { 
-        updateView(post) 
+        updateView(post)
+        // validations - number of win/mac/succcess/fail
+        // imaging - number of win/mac/onsite/remote
+        // deploy - number of deploys/recoveries - building heatmap?
+        
       })
       if (req.query.tech) {
         if (req.query.tech != 0) posts = posts.filter(post => post.user == req.query.tech )
@@ -152,7 +159,7 @@ module.exports = {
         await cloudinary.uploader.destroy(post.cloudinaryId);
       }
       // Delete post from db
-      await Post.remove({ _id: req.params.id });
+      await Post.deleteOne({ _id: req.params.id });
       console.log("Deleted Post");
       res.redirect("/profile");
     } catch (err) {

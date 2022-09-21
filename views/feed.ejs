@@ -1,7 +1,7 @@
 <%- include('partials/header', {user: user}) -%>
   <div class="container" id="viewContainer">
-    <div class="row justify-content-center mt-1">
-      <%- include('partials/feedFilters') -%>
+      <%- include('partials/tabs') -%>
+       <%- include('partials/feedFilters') -%>
       <%- include('partials/taskList', {user: user, posts: posts}) %>
         </ul>
     <button class="btn btn-secondary w-25" onclick="exportToPDF('taskList')">Export to PDF</button>
