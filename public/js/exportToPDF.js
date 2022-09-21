@@ -1,7 +1,7 @@
 function exportToPDF(elem) {
   window.jsPDF = window.jspdf.jsPDF;
 
-  doc = new jsPDF('l', 'pt', 'letter')
+  doc = new jsPDF('l', 'pt', 'legal')
   var source = window.document.getElementById('report')
   source.classList.add('printable')
   console.log(source)
