@@ -6,7 +6,7 @@ function exportToPDF(elem) {
   source.classList.add('printable')
   console.log(source)
   doc.html(source).then(() => {
-        doc.save('filename.pdf')
+        doc.save('techreport.pdf')
       })
   setTimeout(() => source.classList.remove('printable'), 1000)
 } 
