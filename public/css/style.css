@@ -120,6 +120,10 @@ a {
     margin: -1em 0;
  }
 
+ input[type=radio]{
+    transform:scale(1.5);
+  }
+  
 a:hover {
     color: lightblue;
 }
