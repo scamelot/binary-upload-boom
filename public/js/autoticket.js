@@ -6,6 +6,13 @@ const taskButtons = document.querySelectorAll(".btn-check")
 const timeSelect = document.querySelector('#timeSelect')
 const locationSelect = document.querySelector('#locationSelect')
 
+//default date to today
+const datePicker = document.getElementById('date')
+
+if (datePicker) {
+    datePicker.valueAsDate = new Date();
+}
+
 const buildings = [
     'Building 1',
     'Building 2',

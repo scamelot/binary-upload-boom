@@ -12,9 +12,9 @@
 <%- include('options/incident') %>
 <%- include('options/breakfix') %>
 
-<div class="col d-flex justify-content-between">
+<div class="row d-flex justify-content-around">
 
-  <div>    
+  <div class="col-md-auto">    
     <label for="minutes" class="form-label">Time</label>
     <select class="form-select input-dark" name="minutes">
     <option value="15">15 minutes</option>
@@ -26,8 +26,14 @@
     <option value="105">105 minutes</option>
     <option value="120">120 minutes</option>
   </select>
+
   </div>
-  <div>
+
+    <div class="col-md-auto">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control input-dark" id="date" name="date"/>
+      </div>
+  <div class="col-md-auto">
     <label for="state" class="form-label">State</label>
     <select class="form-select input-dark" name="state">
     <option value="In Progress">In Progress</option>

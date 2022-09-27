@@ -127,7 +127,8 @@ module.exports = {
       })
       //get tech userName
       let techName = ''
-      if (req.query.tech) {
+      if (req.query.tech && req.query.tech != 0) {
+        console.log(req.query.tech)
         const techData = await User.findById(req.query.tech).lean()
         techName = techData.userName || 'All Techs'
       }
@@ -159,7 +160,7 @@ module.exports = {
 
       await Post.create({
         title: req.body.title,
-        date: moment(),
+        createdAt: moment(req.body.date),
         minutes: req.body.minutes,
         taskType: req.body.btnradio,
         image: imageUrl,
