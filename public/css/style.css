@@ -178,9 +178,8 @@ a:hover {
 
 .btn-group {
     height: 8vh;
-    width: 100%;
+    max-width: 100vw;
 }
-
 .btn-group .btn {
     display: flex;
     flex-direction: column;

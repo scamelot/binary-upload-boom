@@ -26,22 +26,19 @@
   </head>
 <body>
 
-    <header class="container">
+    <header class="">
     <% let logowidth= 300; let logoheight = 300; %>
     <% if (user) { %>
-      <div class="d-flex justify-content-around mt-2">
-        <p><strong>User Name</strong>: <%= user.userName %></p>
-        <p><strong>Email</strong>: <%= user.email %></p>
-    </div>
-    <div class='d-flex justify-content-end'>
-      <a href="/logout" class="btn btn-outline-secondary mb-5">Logout</a>
+      <div class="d-flex justify-content-end mt-2">
+        <p><strong>Logged in as</strong>: <%= user.userName %></p>
+      <a href="/logout" class="btn btn-outline-secondary mx-5">Logout</a>
     </div>
     <% logowidth = 150; logoheight = 150; %>
     <% } else { %>
-      <div class="spacer mt-5 d-flex justify-content-end"><a href="/login" class="btn btn-outline-primary mb-5">Login</a></div>
+      <div class="spacer mt-5 d-flex justify-content-end"><a href="/login" class="btn btn-outline-primary mb-2">Login</a></div>
 
     <% } %>
-      <div class="text-center">
+      <div class="text-center mt-5">
         <h1 class=""><a href="/profile"><img class="img-fluid" id="logo" style="width:<%=logowidth%>px; height:<%=logoheight%>px; margin-top: -2em" src='/imgs/taskerlogo.gif'></img></a></h1>
       </div>
     </header>
