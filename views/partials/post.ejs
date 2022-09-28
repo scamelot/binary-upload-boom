@@ -9,12 +9,33 @@
     <td><p><%= post.data %></p></td>
     <td><h5><%= post.minutes ? post.minutes + " minutes" : '' %></h5></td>
     <td><% if(post.user == user.id){ %>
+
+        Button trigger modal
+
+  <button class="btn btn-primary fa fa-trash delete" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark">
+      <div class="modal-header border-none">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>Delete this task?</strong></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body bg-dark">
+        This will remove this task from your list and all reports it appears on. This cannot be undone!
+      </div>
+      <div class="modal-footer d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nevermind</button>
         <form
-          action="/post/deletePost/<%= post._id %>?_method=DELETE"
-          method="POST"
-          class="col-3"
-        >
-          <button class="btn btn-primary fa fa-trash delete" type="submit"></button>
-        </form>
+        action="/post/deletePost/<%= post._id %>?_method=DELETE"
+        method="POST"
+        class="col">
+        <button type="submit" class="btn btn-danger">I'm sure - Trash This Task</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-- </form> -->
         <% } %></td>
 </tr>

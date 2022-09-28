@@ -12,8 +12,10 @@ function updateView(post) {
   if (post.taskType == 'Validation') {
     if (post.allData) {
       post.caption += addOSIcon(post)
+      //start with the icon, find all the failures
       let failures = Object.keys(post.allData).filter(key => key.includes("Fail"))
       if (failures.length > 0) {
+        //replace 'Fail' in each
         failures = failures.map(x => x.replace('Fail','')  )
         post.caption += `\n<b class='text-danger'>Failed:</b> `
         failures.forEach(fail => {
