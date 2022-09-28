@@ -1,6 +1,12 @@
-body {
+html, body {
     background: rgb(25, 25, 25);
     color: white;
+    height: 100%;
+    margin: 0;
+}
+
+.footer {
+  background-color: #1d1d1dc7 !important;
 }
 
  .checkbox * {
@@ -19,7 +25,11 @@ body {
     position: relative;
     padding-left: 5px;
   }
-  
+
+  .force-to-bottom {
+    bottom: 1%;
+    width: 100% !important;
+}
    .checkbox label::before {
     content: "";
     display: inline-block;

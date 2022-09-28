@@ -23,19 +23,20 @@
     <link rel="stylesheet" href="/css/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ 
   </head>
-<body>
+<body class="h-100">
 
     <header class="">
     <% let logowidth= 300; let logoheight = 300; %>
     <% if (user) { %>
-      <div class="d-flex justify-content-end mt-2">
+      <div class="d-flex justify-content-around mt-2">
         <p><strong>Logged in as</strong>: <%= user.userName %></p>
       <a href="/logout" class="btn btn-outline-secondary mx-5">Logout</a>
     </div>
     <% logowidth = 150; logoheight = 150; %>
     <% } else { %>
-      <div class="spacer mt-5 d-flex justify-content-end"><a href="/login" class="btn btn-outline-primary mb-2">Login</a></div>
+      <div class="spacer mt-5 d-flex justify-content-around"><div></div><a href="/login" class="btn btn-outline-primary mb-2">Login</a></div>
 
     <% } %>
       <div class="text-center mt-5">
